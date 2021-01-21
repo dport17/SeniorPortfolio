@@ -4,7 +4,7 @@ This README would normally document whatever steps are necessary to get your app
 
 ### What is this repository for? ###
 
-* Quick summary
+* This repository is so that I can set up and work on projects in CPS475
 * Version
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
