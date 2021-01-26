@@ -1,6 +1,6 @@
 # README #
 
-##SecAD - Secure Application Development
+## SecAD - Secure Application Development
 
 ### Instructor: Dr. Phu Phung
 
@@ -16,12 +16,8 @@ Email: porterd3@udayton.edu
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+I'm just running another test to make sure I didn't
+just break my SSH keys
 
 ### Contribution guidelines ###
 
