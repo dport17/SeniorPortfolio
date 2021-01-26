@@ -1,12 +1,17 @@
 # README #
+#SecAD - Secure Application Development
 
-This README would normally document whatever steps are necessary to get your application up and running.
+### Instructor: Dr. Phu Phung
 
-### What is this repository for? ###
+### Department of Computer Science 
 
-* This repository is so that I can set up and work on projects in CPS475
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+## University of Dayton
+
+## Repository Information
+
+* This repository is so that Devin Porter can set up and work on projects in CPS475
+
+Email: porterd3@udayton.edu
 
 ### How do I get set up? ###
 
