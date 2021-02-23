@@ -43,21 +43,12 @@ public class EchoServer {
         int portNumber = Integer.parseInt(args[0]);
         
         try {
-            ServerSocket serverSocket =
-                new ServerSocket(Integer.parseInt(args[0]));
+            ServerSocket serverSocket = new ServerSocket(Integer.parseInt(args[0]));
             System.out.println("EchoServer is running at port " + Integer.parseInt(args[0]));
-            Socket clientSocket = serverSocket.accept(); 
-            System.out.println("A client is connected ");    
-            PrintWriter out =
-                new PrintWriter(clientSocket.getOutputStream(), true);                   
-            BufferedReader in = new BufferedReader(
-                new InputStreamReader(clientSocket.getInputStream()));
-    
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println("received from client: " + inputLine);
-                System.out.println("Echo back");
-                out.println(inputLine);
+            while (true){
+            	Socket clientSocket = serverSocket.accept(); 
+            	System.out.println("A client is connected ");
+            	new EchoServerThread(clientSocket).start();    
             }
         } catch (IOException e) {
             System.out.println("Exception caught when trying to listen on port "
@@ -65,4 +56,30 @@ public class EchoServer {
             System.out.println(e.getMessage());
         }
     }
+}
+
+class EchoServerThread extends Thread{
+	private Socket clientSocket = null;
+	public EchoServerThread(Socket socket){
+		clientSocket = socket;
+	}
+	public void run(){
+		System.out.println("A new thread for client is running...");
+		try{
+			PrintWriter out =
+	                new PrintWriter(clientSocket.getOutputStream(), true);                   
+	            BufferedReader in = new BufferedReader(
+	                new InputStreamReader(clientSocket.getInputStream()));
+	    
+	            String inputLine;
+	            while ((inputLine = in.readLine()) != null) {
+	                System.out.println("received from client: " + inputLine);
+	                System.out.println("Echo back");
+	                out.println(inputLine);
+	            }
+        } catch(IOException ioe){
+        	System.out.println("Exception in thread:"
+									+ ioe.getMessage());
+        }
+	}
 }

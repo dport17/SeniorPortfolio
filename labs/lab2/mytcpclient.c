@@ -45,5 +45,21 @@ int main (int argc, char *argv[])
 		printf("Connected to the server %s at port %s\n",servername, port);
 	}
 	freeaddrinfo(serveraddr);
+
+	int BUFFERSIZE = 1024; //define the size of the buffer
+	char buffer[BUFFERSIZE]; //define the buffer
+	bzero(buffer,BUFFERSIZE);
+	printf("Enter your message to send:");
+	fgets(buffer, BUFFERSIZE, stdin);
+	int byte_sent = send(sockfd,buffer, strlen(buffer), 0);
+
+	bzero(buffer,BUFFERSIZE);
+	int byte_received = recv(sockfd, buffer, BUFFERSIZE, 0);
+	if(byte_received <0){
+		perror("Error in reading");
+		exit(4);
+	}
+	printf("Received from server: %s", buffer);
 	close(sockfd);
+	return 0;
 }

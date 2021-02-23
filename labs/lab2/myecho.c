@@ -6,6 +6,6 @@
 int main (int argc, char *argv[])
 {
    char buffer[126];
-   strcpy(buffer, argv[1]);
+   strncpy(buffer, argv[1], 126);
    printf("%s\n", buffer);
 }

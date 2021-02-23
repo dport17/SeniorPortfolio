@@ -1,6 +1,26 @@
 #!/bin/bash
 program=$1
-
-	$program `auto-input`
+if [-z '$program'] 
+	then
+	echo "Usage: $0 <program>"
+	exit 1;
+fi
+echo "Detecting max input size for $program program by Devin Porter"
+length=1
+while true
+do
+	$program `python -z "print 'x'*length"`
 	return_code=$?;
-	
+	if [ $return_code -eq 127 ]; then
+		echo "$program does not exist! Try again.";
+		exit 2;
+	elif [ $return_code -eq 0 ]; then
+		#statements
+		printf "Executed successfully with input length = $length\n";
+		length = $((length+1))
+	else
+		size=$((length-1))
+		printf "Failed. Max input length = $size\n";
+		break;
+	fi
+done
