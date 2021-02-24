@@ -16,7 +16,7 @@ int main (int argc, char *argv[])
 	}
 	char *servername = argv[1];
 	char *path = argv[2];
-   printf("TCP CLient program by Devin pather\n");
+   printf("TCP CLient program by Devin Porter\n");
    printf("Servername = %s, path = %s\n", argv[1], argv[2]);
 
    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -49,9 +49,7 @@ int main (int argc, char *argv[])
 	int BUFFERSIZE = 1024; //define the size of the buffer
 	char buffer[BUFFERSIZE]; //define the buffer
 	bzero(buffer,BUFFERSIZE);
-	//printf("Enter your message to send:");
 	sprintf(buffer, "GET %s HTTP/1.1\r\nHost: %s\r\n\r\n",path,servername);
-	fgets(buffer, BUFFERSIZE, stdin);
 	int byte_sent = send(sockfd,buffer, strlen(buffer), 0);
 
 	bzero(buffer,BUFFERSIZE);
