@@ -34,22 +34,6 @@ func main() {
 		client_conn, _ := server.Accept()
 		go client_goroutine(client_conn)
 	}
-	
-	// fmt.Printf("A new client '%s' connected!\n", client_conn.RemoteAddr().String())
-	// var buffer [BUFFERSIZE]byte
-	// for {
-	// 	byte_received, read_err := client_conn.Read(buffer[0:])
-	// 	if read_err != nil {
-	// 		fmt.Println("Error in receiving...")
-	// 		return
-	// 	}
-	// 	_, write_err := client_conn.Write(buffer[0:byte_received])
-	// 	if write_err != nil {
-	// 		fmt.Println("Error in sending...")
-	// 		return
-	// 	}
-	// 	fmt.Printf("Received data: %sEchoed back!\n", buffer)
-	// }
 }
 
 func client_goroutine(client_conn net.Conn){
