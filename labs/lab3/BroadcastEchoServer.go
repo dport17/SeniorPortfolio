@@ -8,7 +8,7 @@ import (
 )
 
 var allClients_conns = make(map[net.Conn]string)
-var losClient = make(chan net.Conn)
+var lostClient = make(chan net.Conn)
 
 
 const BUFFERSIZE int = 1024
@@ -44,6 +44,10 @@ func main() {
 		case client_conn := <- newclient:
 			allClients_conns[client_conn] = client_conn.RemoteAddr().String()
 			go client_goroutine(client_conn)
+		case client_conn := <- lostClient:
+			delete(allClients_conns, client_conn)
+			byemessage := fmt.Sprintf("Client %s is DISCONNECTED\n# of clients is now %d\n", client_conn.RemoteAddr.String(), len(allClients_conns))
+			go sendToAll([]byte (byemessage))
 		}
 	}
 	
@@ -61,18 +65,12 @@ func client_goroutine(client_conn net.Conn){
 			byte_received, read_err := client_conn.Read(buffer[0:])
 			if read_err != nil {
 				fmt.Println("Error in receiving...")
+				lostClient <- client_conn
 				return
 			}
-			/*
-			_, write_err := client_conn.Write(buffer[0:byte_received])
-			if write_err != nil {
-				fmt.Println("Error in sending...")
-				return
-			}
-			fmt.Printf("Received data: %sEchoed back!\n", buffer)*/
 			go sendToAll(buffer[0:byte_received])
 		}
-	}
+	}()
 }
 
 
