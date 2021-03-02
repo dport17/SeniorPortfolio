@@ -47,6 +47,7 @@ func main() {
 		case client_conn := <- lostClient:
 			delete(allClients_conns, client_conn)
 			byemessage := fmt.Sprintf("Client %s is DISCONNECTED\n# of clients is now %d\n", client_conn.RemoteAddr.String(), len(allClients_conns))
+			fmt.Println(byemessage)
 			go sendToAll([]byte (byemessage))
 		}
 	}
@@ -57,7 +58,6 @@ func client_goroutine(client_conn net.Conn){
 	welcomemessage := fmt.Sprintf("A new client '%s' connected!\n# of connected clients: %d\n", client_conn.RemoteAddr().String(), len(allClients_conns))
 	fmt.Println(welcomemessage)
 	go sendToAll([]byte (welcomemessage))
-
 
 	var buffer [BUFFERSIZE]byte
 	go func(){
