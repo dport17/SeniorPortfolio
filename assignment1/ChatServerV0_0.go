@@ -68,7 +68,7 @@ func client_goroutine(client_conn net.Conn){
 				lostClient <- client_conn
 				return
 			}
-			
+			clientdata := 
 			go sendToAll(buffer[0:byte_received])
 		}
 	}()
