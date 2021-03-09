@@ -36,3 +36,19 @@ client.on("close",function(data){
 	console.log("Connection disconnected");
 	process.exit(3);
 });
+
+const keyboard = require('readline').createInterface({
+	input: process.stdin,
+	output: process.stdout
+});
+
+keyboard.on('line',(input)=>{
+	console.log(`You typed: ${input}`);
+	if(input==".exit"){
+		client.destroy();
+		console.log("Disconnected!");
+
+	}else{
+		client.write(input);
+	}
+});
