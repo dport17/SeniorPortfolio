@@ -33,6 +33,7 @@ import java.net.*;
 import java.io.*;
 
 public class EchoServer {
+    static ThreadList threadlist = new ThreadList();
     public static void main(String[] args) throws IOException {
         
         if (args.length != 1) {
@@ -49,7 +50,10 @@ public class EchoServer {
             while (true){
             	Socket clientSocket = serverSocket.accept(); 
             	System.out.println("A client is connected ");
-            	new EchoServerThread(clientSocket).start();    
+            	new EchoServerThread(clientSocket).start();  
+                EchoServerThread newthread = new EchoServerThread(threadlist,clientSocket);
+                threadlist.addThread(newthread);
+                newthread.start();  
             }
         } catch (IOException e) {
             System.out.println("Exception caught when trying to listen on port "
@@ -61,11 +65,19 @@ public class EchoServer {
 
 class EchoServerThread extends Thread{
 	private Socket clientSocket = null;
+    private ThreadList threadlist = null;
 	public EchoServerThread(Socket socket){
 		clientSocket = socket;
 	}
+    public EchoServerThread(ThreadList threadlist, Socket socket){
+        clientSocket = socket;
+        this.threadlist = threadlist;
+    }
 	public void run(){
 		System.out.println("A new thread for client is running...");
+        if(threadlist!=null){
+            System.out.println("Inside thread: total clients: " + threadlist.getNumberofThreads());
+        }
 		try{
 			PrintWriter out =
 	                new PrintWriter(clientSocket.getOutputStream(), true);                   

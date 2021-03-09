@@ -1,4 +1,4 @@
-/* Simple EchoServer in GoLang by Phu Phung, customized by <YOUR NAME> for SecAD*/
+/* Simple EchoServer in GoLang by Phu Phung, customized by Devin Porter for SecAD*/
 package main
 
 import (
@@ -41,14 +41,14 @@ func main() {
 	}()
 	for{
 		select{
-		case client_conn := <- newclient:
-			allClients_conns[client_conn] = client_conn.RemoteAddr().String()
-			go client_goroutine(client_conn)
-		case client_conn := <- lostClient:
-			delete(allClients_conns, client_conn)
-			byemessage := fmt.Sprintf("Client %s is DISCONNECTED\n# of clients is now %d\n", client_conn.RemoteAddr.String(), len(allClients_conns))
-			fmt.Println(byemessage)
-			go sendToAll([]byte (byemessage))
+			case client_conn := <- newclient:
+				allClients_conns[client_conn] = client_conn.RemoteAddr().String()
+				go client_goroutine(client_conn)
+			case client_conn := <- lostClient:
+				delete(allClients_conns, client_conn)
+				byemessage := fmt.Sprintf("Client %s is DISCONNECTED\n# of clients is now %d\n", client_conn.RemoteAddr().String(), len(allClients_conns))
+				fmt.Println(byemessage)
+				go sendToAll([]byte (byemessage))
 		}
 	}
 	
