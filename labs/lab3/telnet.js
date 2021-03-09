@@ -22,3 +22,17 @@ client.connect(port,host, connected);
 function connected(){
 	console.log("Connected to: %s:%s", client.remoteAddress, client.remotePort);
 }
+
+client.on("data",data=>{
+	console.log("Received data:"+data);
+});
+
+client.on("error",function(err){
+	console.log("error");
+	process.exit(2);
+});
+
+client.on("close",function(data){
+	console.log("Connection disconnected");
+	process.exit(3);
+});
