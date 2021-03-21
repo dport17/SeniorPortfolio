@@ -22,3 +22,33 @@ client.connect(port,host, connected);
 function connected(){
 	console.log("Connected to: %s:%s", client.remoteAddress, client.remotePort);
 }
+
+client.on("data",data=>{
+	console.log("Received data:"+data);
+});
+
+client.on("error",function(err){
+	console.log("error");
+	process.exit(2);
+});
+
+client.on("close",function(data){
+	console.log("Connection disconnected");
+	process.exit(3);
+});
+
+const keyboard = require('readline').createInterface({
+	input: process.stdin,
+	output: process.stdout
+});
+
+keyboard.on('line',(input)=>{
+	console.log(`You typed: ${input}`);
+	if(input==".exit"){
+		client.destroy();
+		console.log("Disconnected!");
+
+	}else{
+		client.write(input);
+	}
+});

@@ -70,12 +70,15 @@ func client_goroutine(client_conn net.Conn){
 			}
 			clientdata := buffer[0:byte_received-2]
 			fmt.Printf("Received data: %s, len=%d\n", clientdata, len(clientdata))
-			//compare the data
 			result1 := string(clientdata)
-			fmt.Printf("The clientdata as a string is:'%s'\n", result1)
-			if result1 == "login" {
-				fmt.Printf("The strings matched!")
-				client_conn.Write(buffer[0:byte_received])
+			if len(clientdata) > 5 && string(clientdata[0:5])=="login"{
+				fmt.Println("Potential attack detected: ignoring input.")
+			}else if result1 == "login"{
+				loginmessage := "login data\n"
+				client_conn.Write([]byte (loginmessage))
+			}else{
+				loginmessage := "non-login data\n"
+				client_conn.Write([]byte (loginmessage))
 			}
 			go sendToAll(buffer[0:byte_received])
 		}

@@ -1,4 +1,4 @@
-/* Simple EchoServer in GoLang by Phu Phung, customized by <YOUR NAME> for SecAD*/
+/* Simple EchoServer in GoLang by Phu Phung, customized by Devin Porter for SecAD*/
 package main
 
 import (
