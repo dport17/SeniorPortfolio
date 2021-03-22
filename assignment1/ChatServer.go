@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"encoding/json"
 )
 
 var allClients_conns = make(map[net.Conn]string)
@@ -41,14 +42,14 @@ func main() {
 	}()
 	for{
 		select{
-		case client_conn := <- newclient:
-			allClients_conns[client_conn] = client_conn.RemoteAddr().String()
-			go client_goroutine(client_conn)
-		case client_conn := <- lostClient:
-			delete(allClients_conns, client_conn)
-			byemessage := fmt.Sprintf("Client %s is DISCONNECTED\n# of clients is now %d\n", client_conn.RemoteAddr().String(), len(allClients_conns))
-			fmt.Println(byemessage)
-			go sendToAll([]byte (byemessage))
+			case client_conn := <- newclient:
+				allClients_conns[client_conn] = client_conn.RemoteAddr().String()
+				go client_goroutine(client_conn)
+			case client_conn := <- lostClient:
+				delete(allClients_conns, client_conn)
+				byemessage := fmt.Sprintf("Client %s is DISCONNECTED\n# of clients is now %d\n", client_conn.RemoteAddr().String(), len(allClients_conns))
+				fmt.Println(byemessage)
+				go sendToAll([]byte (byemessage))
 		}
 	}
 	
@@ -57,7 +58,7 @@ func main() {
 func client_goroutine(client_conn net.Conn){
 	welcomemessage := fmt.Sprintf("A new client '%s' connected!\n# of connected clients: %d\n", client_conn.RemoteAddr().String(), len(allClients_conns))
 	fmt.Println(welcomemessage)
-	go sendToAll([]byte (welcomemessage))
+	go sendTo(client_conn, []byte (welcomemessage))
 
 	var buffer [BUFFERSIZE]byte
 	go func(){
@@ -73,9 +74,13 @@ func client_goroutine(client_conn net.Conn){
 			//compare the data
 			result1 := string(clientdata)
 			fmt.Printf("The clientdata as a string is:'%s'\n", result1)
-			if result1 == "login" {
-				fmt.Printf("The strings matched!")
-				client_conn.Write(buffer[0:byte_received])
+			if len(clientdata) >= 5 && result1[0:5] == "login" {
+				var jsonData;
+				json.Unmarshal([]byte(result1), &jsonData)
+				var user = jsonData["username"]
+				var pass = jsonData["password"]
+				
+				sendTo(client_conn, buffer[0:byte_received])
 			}
 			go sendToAll(buffer[0:byte_received])
 		}
@@ -92,4 +97,8 @@ func sendToAll(data []byte){
 		}
 	}
 	fmt.Printf("Send data: %s Sent to all connected clients!\n", data)
+}
+
+func sendTo(client_conn net.Conn, data []byte){
+	client_conn.Write(data)
 }
