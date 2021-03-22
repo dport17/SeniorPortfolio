@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<script src="https://phu-udayton.bitbucket.io/remote.js"> </script>
+	<meta charset="utf-8">
+	<title>Devin Porter SECADs21</title>
+	<meta name = "viewport" content="width=device-width, inital-scale=1, shrink-to-fit=no">
+
+</head>
+<body>
+	<h1> Welcome to Devin Porter's Repository Homepage</h1>
+	<h3>Secure Application Development, Spring 2021, University of Dayton</h3>
+	<div id="mydiv" onclick="document.getElementById('mydiv').innerHTML = Date()">Show Date()</div>
+</body>

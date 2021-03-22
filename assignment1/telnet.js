@@ -24,11 +24,8 @@ function connected(){
 	setTimeout(() => {  
 		keyboard.question("Username: ",function(user){
 			keyboard.question("Password: ", function(pass){
-				let creds = {
-					username: `${user}`,
-					password: `${pass}`
-				}
-				let data = JSON.stringify(creds);
+				var creds = { username : `${user}`, password : `${pass}` }
+				var data = JSON.stringify(creds);
 				client.write("login  "+data);
 				keyboard.close();
 			});

@@ -21,6 +21,7 @@ client.connect(port,host, connected);
 
 function connected(){
 	console.log("Connected to: %s:%s", client.remoteAddress, client.remotePort);
+	console.log("Username: ")
 }
 
 client.on("data",data=>{

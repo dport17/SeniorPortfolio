@@ -55,6 +55,10 @@ func main() {
 	
 }
 
+type User struct{
+	username, password string
+}
+
 func client_goroutine(client_conn net.Conn){
 	welcomemessage := fmt.Sprintf("A new client '%s' connected!\n# of connected clients: %d\n", client_conn.RemoteAddr().String(), len(allClients_conns))
 	fmt.Println(welcomemessage)
@@ -75,12 +79,19 @@ func client_goroutine(client_conn net.Conn){
 			result1 := string(clientdata)
 			fmt.Printf("The clientdata as a string is:'%s'\n", result1)
 			if len(clientdata) >= 5 && result1[0:5] == "login" {
-				var jsonData;
-				json.Unmarshal([]byte(result1), &jsonData)
-				var user = jsonData["username"]
-				var pass = jsonData["password"]
-				
-				sendTo(client_conn, buffer[0:byte_received])
+
+				fmt.Printf("The result from pulling everything after login is: %s\n", result1[7:len(clientdata)])
+				var result map[string]interface{}
+				json.Unmarshal([]byte(result1[7:]), &result)
+				fmt.Println((result["username"]))
+				if(result["username"]=="devin"&&result["password"]=="porter"){
+					sendTo(client_conn, []byte("Welcome to the chatserver!"))
+				}
+				// var jsonData string
+				// json.Unmarshal([]byte(result1[7:]), &jsonData)
+				// var user = jsonData["username"]
+				// var pass = jsonData["password"]
+				// sendTo(client_conn, buffer[0:byte_received])
 			}
 			go sendToAll(buffer[0:byte_received])
 		}
