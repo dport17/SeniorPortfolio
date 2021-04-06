@@ -23,8 +23,7 @@ client.connect(port,host, connected);
 
 function connected(){
 	console.log("Connected to: %s:%s", client.remoteAddress, client.remotePort);
-	console.log("You are currently in public messaging mode.");
-	console.log("Type private, direct, dm, or pm to enter private messaging.");
+	
 	console.log("Type .exit to quit.");
 	setTimeout(() => { runLogin() }, 1000);
 	
@@ -41,7 +40,7 @@ function runLogin(){
 }
 
 function setUser(){
-	return new Promise(resolve => keyboard.question("Who would you like to DM?", ans =>{
+	return new Promise(resolve => keyboard.question("Who would you like to DM?\n", ans =>{
 		resolve(ans);
 	}))
 }
@@ -58,10 +57,15 @@ client.on("data",data=>{
 	if(data.toString()=="LF"){
 		console.log("Invalid username or password. Try again.");
 		runLogin();
+		return;
+	}else if (data.toString()=="\nWelcome to the chatserver!\n"){
+		console.log(data.toString());
+		console.log("You are currently in public messaging mode.");
+		console.log("Type private, direct, dm, or pm to enter private messaging.");
+		console.log("Type 'users' to get a list of online users.")
 	}else{
-		console.log("New message: "+data);
+		console.log(data.toString());
 	}
-	console.log(data.toString());
 });
 
 client.on("error",function(err){
@@ -80,7 +84,6 @@ const keyboard = require('readline').createInterface({
 });
 
 keyboard.on('line',(input)=>{
-	console.log(`You typed: ${input}`);
 	if(input==".exit"){
 		client.destroy();
 		console.log("Disconnected!");
