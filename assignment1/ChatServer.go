@@ -77,11 +77,13 @@ func client_goroutine(client_conn net.Conn){
 			//compare the data
 			result1 := string(clientdata)
 			fmt.Printf("The clientdata as a string is:'%s'\n", result1)
-			if len(clientdata) >= 5 && result1[0:5] == "login" {
 
-				fmt.Printf("The result from pulling everything after login is: %s\n", result1[7:len(clientdata)])
+			if len(clientdata) >= 5 && result1[0:5] == "login" { //handle login attempts.
+
+				fmt.Printf("The JSON received is: %s\n", result1[7:len(clientdata)])
+
+				//Make JSON string parseable.
 				var result map[string]interface{}
-
 				json.Unmarshal([]byte(result1[7:]), &result)
 				username := fmt.Sprintf("%v", result["username"])
 
@@ -91,6 +93,22 @@ func client_goroutine(client_conn net.Conn){
 				}else{
 					go sendTo(client_conn, []byte("LF"))
 				}
+
+			}else{ //handle all non-login messages.
+				
+				if _, present := allAuthClients[client_conn]; present {
+					fmt.Println("Sending user is authenticated.")
+
+					//Make JSON string parseable.
+					var result map[string]interface{}
+					json.Unmarshal([]byte(result1), &result)
+					//username := fmt.Sprintf("%v", result["username"])
+					go sendTo(client_conn, []byte(result1))
+				}else{
+					sendTo(client_conn, []byte("You cannot send a message until you login."))
+					go sendTo(client_conn, []byte("LF"))
+				}
+
 			}
 
 			if result1 == "users"{

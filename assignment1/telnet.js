@@ -56,7 +56,7 @@ async function switchToPriv(){
 
 client.on("data",data=>{
 	if(data.toString()=="LF"){
-		console.log("The login was not successful, please try again.");
+		console.log("Invalid username or password. Try again.");
 		runLogin();
 	}else{
 		console.log("New message: "+data);
