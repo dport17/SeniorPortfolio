@@ -30,14 +30,20 @@ function connected(){
 }
 
 function runLogin(){
+	keyboard.stdoutMuted = false;
 	keyboard.question("Username: ",function(user){
-		keyboard.question("Password: ", function(pass){
+		keyboard.stdoutMuted = true;
+		keyboard.query = "Password: "
+		keyboard.question(keyboard.query, function(pass){
 			var creds = { username : `${user}`, password : `${pass}` }
 			var data = JSON.stringify(creds);
 			client.write("login  "+data);
+			keyboard.stdoutMuted = false;
 		});
 	});
 }
+
+
 
 function setUser(){
 	return new Promise(resolve => keyboard.question("Who would you like to DM?\n", ans =>{
@@ -82,6 +88,12 @@ const keyboard = require('readline').createInterface({
 	input: process.stdin,
 	output: process.stdout
 });
+keyboard._writeToOutput = function _writeToOutput(stringToWrite) {
+	if (keyboard.stdoutMuted)
+		keyboard.output.write("\x1B[2K\x1B[200D"+keyboard.query+"["+((keyboard.line.length%2==1)?"=-":"-=")+"]");
+	else
+		keyboard.output.write(stringToWrite);
+};
 
 keyboard.on('line',(input)=>{
 	if(input==".exit"){
@@ -105,3 +117,4 @@ keyboard.on('line',(input)=>{
 		client.write(JSON.stringify(msg));
 	}
 });
+

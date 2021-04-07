@@ -83,15 +83,7 @@ func client_goroutine(client_conn net.Conn) {
 				//Make JSON string parseable.
 				var result map[string]interface{}
 				json.Unmarshal([]byte(result1[7:]), &result)
-				username := fmt.Sprintf("%v", result["username"])
-
-				if (result["username"] == "devin" && result["password"] == "porter") || (result["username"] == "chloe" && result["password"] == "richie") {
-					allAuthClients[client_conn] = username
-					go sendTo(client_conn, []byte("\nWelcome to the chatserver!\n"))
-				} else {
-					go sendTo(client_conn, []byte("LF"))
-				}
-
+				checkLogin(client_conn, result)
 			} else { //handle all non-login, non-user list request messages.
 
 				if _, present := allAuthClients[client_conn]; present {
@@ -126,7 +118,7 @@ func client_goroutine(client_conn net.Conn) {
 }
 
 func sendToAll(data []byte) {
-	for client_conn, _ := range allClients_conns {
+	for client_conn, _ := range allAuthClients {
 		_, write_err := client_conn.Write(data)
 		if write_err != nil {
 			fmt.Println("Error in sending...")
@@ -141,7 +133,7 @@ func sendTo(client_conn net.Conn, data []byte) {
 }
 
 func sendUserData(client_conn net.Conn) {
-	var usersString string
+	var usersString = "Users:\n"
 	for key := range allAuthClients {
 		var element = allAuthClients[key]
 		usersString = usersString + element + "\n"
@@ -169,4 +161,21 @@ func sendPrivMessage(user interface{}, msg string) bool {
 		return true
 	}
 	return false
+}
+
+func checkLogin(client_conn net.Conn, result map[string]interface{}) {
+	username := fmt.Sprintf("%v", result["username"])
+	go func() {
+		if (result["username"] == "devin" && result["password"] == "porter") || (result["username"] == "chloe" && result["password"] == "richie") {
+			allAuthClients[client_conn] = username
+			go sendTo(client_conn, []byte("\nWelcome to the chatserver!\n"))
+			sendToAll([]byte(username + " has joined the ChatServer!"))
+			for key := range allAuthClients {
+				sendUserData(key)
+			}
+
+		} else {
+			go sendTo(client_conn, []byte("LF"))
+		}
+	}()
 }
