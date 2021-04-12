@@ -43,8 +43,6 @@ function runLogin(){
 	});
 }
 
-
-
 function setUser(){
 	return new Promise(resolve => keyboard.question("Who would you like to DM?\n", ans =>{
 		resolve(ans);
