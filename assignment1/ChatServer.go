@@ -133,7 +133,7 @@ func sendTo(client_conn net.Conn, data []byte) {
 }
 
 func sendUserData(client_conn net.Conn) {
-	var usersString = "Users:\n"
+	var usersString = "\nUsers:\n"
 	for key := range allAuthClients {
 		var element = allAuthClients[key]
 		usersString = usersString + element + "\n"
@@ -169,7 +169,7 @@ func checkLogin(client_conn net.Conn, result map[string]interface{}) {
 		if (result["username"] == "devin" && result["password"] == "porter") || (result["username"] == "chloe" && result["password"] == "richie") {
 			allAuthClients[client_conn] = username
 			go sendTo(client_conn, []byte("\nWelcome to the chatserver!\n"))
-			sendToAll([]byte(username + " has joined the ChatServer!"))
+			sendToAll([]byte("\n"+username + " has joined the ChatServer!"))
 			for key := range allAuthClients {
 				sendUserData(key)
 			}
