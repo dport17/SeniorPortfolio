@@ -1,31 +1,133 @@
 <!DOCTYPE html>
 <html lang = "en">
 <head>
+	<title>Bootstrap Example</title>
 	<meta charset="utf-8">
-	<title>Devin Porter SECADs21</title>
-	<script src="https://phu-udayton.bitbucket.io/remote.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+	<style>
+	  /* Remove the navbar's default margin-bottom and rounded borders */ 
+	  .navbar {
+		margin-bottom: 0;
+		border-radius: 0;
+	  }
+	  
+	  /* Add a gray background color and some padding to the footer */
+	  footer {
+		background-color: #f2f2f2;
+		padding: 25px;
+	  }
+	</style>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
 </head>
 <body onload = "startTime()">
-	<h1> Welcome to Devin Porter's Repository Homepage</h1>
-	
-	<h3>Secure Application Development, Spring 2021, University of Dayton</h3>
-	<h2>Lab 4: Client Side Web Security and Webpage Development</h2>
-	<img src="imgs/porterd3.jpg" alt="Headshot">
-	Current time: <div id="clock"></div>
 
-	<div id = 'mail' onclick='showhide()'>Show Email</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Portfolio</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="https://porterd3.bitbucket.io/lab4.html">Home</a></li>
+        <li><a href="https://www.linkedin.com/in/devin-porter-ba27a1152">LinkedIn</a></li>
+        <li><a href="https://github.com/dport17/Portfolio">Github</a></li>
+        <li><a href='mailto:porterd3@udayton.edu'>Email me!</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" style="color:gray">
+        <li><div id="clock"></div></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>Devin Porter</h1>      
+    <p>Repository Homepage</p>
+  </div>
+</div>
+  
+<div class="container-fluid bg-3 text-center ">    
+  <h3>My Goals and Aspirations</h3><br>
+  <div class="row shadow p-3 mb-5 bg-white rounded">
+    <div class="col-md-4">
+		<h2>Career and Mission</h2>
+		<br>
+		<img src = "imgs/porterd3.jpg" alt="Headshot">
+		<br>
+      	<p style = "margin-top: 8px;">Devin has a B.S. degree in Computer Information Systems from the University of Dayton, with a focus in Cybersecurity and a minor 
+			in Communication. His commitment to and passion for problem-solving, communication, and self-development 
+			is the foundation on which he has built and maintains his drive to become the best leader, student, and community member he can be.
+			<br>
+			Further, Devin is an aspiring IT Security professional. Through such a position, he hopes to play an integral part in building a safer world for every user, everywhere. In so doing, he'll fulfill his desire to truly make an impact in the lives of others.
+		</p>
+    </div>
+    <div class="col-md-4"> 
+		<h2>Background</h2>
+		<p>Born and raised in the relatively small town of Owosso, Mi, I've always had a strong work ethic and great leadership skills. As the oldest
+			child in a family of 8 children, I had my work cut out for me, and had to learn at a very young age how to gather many people around a single
+			shared goal. Today, leading others is a skill I'm truly proud of. I completed my high school days at Lansing Catholic High School in Lansing, Mi,
+			and attained my Bachelor's of Science in CIS from the incredible University of Dayton.
+		</p>
+		<img src="imgs/udChapel.jpg" class="img-responsive" style="width:100%" alt="University of Dayton Chapel">
+    </div>
+	
+    <div class="col-md-4"> 
+		<h2>Where I've been, and where I'm headed</h2>
+		<img src="imgs/cyberSec.jpg" alt="Cybersecurity, yeah!" width="260px" height="200px">
+		<p style = "margin-top: 8px;">I've completed two internships with Sparrow Health System in Lansing, Mi, both in-office and remotely. This year, my internship extended
+			throughout the 2020-21 school year, as I worked part-time in a software development role working in Network Automation and Software Development.
+			For more information on that, check out my <a href="https://www.linkedin.com/in/devin-porter-ba27a1152">LinkedIn!</a> 
+		</p>
+		<p>
+			Soon, I'll be entering the workforce as a Technical Systems Analyst, focusing specifically in hospital paging systems and Network
+			automation. From that springboard, I hope to leap into the world of ethical hacking, information security, and the dream of one day
+			starting my own cyber security consulting company.
+		</p>
+      
+	 
+    </div>
+  </div>
+</div><br>
+
+<footer class="container-fluid text-center">
+  <p>Thanks for stopping by! Contact me at <div id = 'mail' onclick='showhide()'>This Email</div> or<br>check out <a href=https://www.linkedin.com/in/devin-porter-ba27a1152>My LinkedIn!</a></p>
+</footer>
+
 </body>
+</html>
 
 <script>
-	document.write("Content generated from document.write");
-	document.write("<script>alert('script code is generated within script code');</"+"script>");
-	if(document.cookie.indexOf("username")<0){
-		alert('no  username cookie. set new one.');
-		document.cookie = "username=porterd3";
-	}else{
-		alert("my cookie: "+document.cookie);
-	}
-
 	function startTime() {
 		document.getElementById("clock").innerHTML= new Date();
 		setTimeout(startTime, 500);
